@@ -7,3 +7,4 @@ Bot de WhatsApp construido con [whatsapp-web.js](https://wwebjs.dev/guide/) para
 # Funciones
 
 - Detectar enlaces de YouTube para generar un enlace de descarga.
+- Crear stickers adjuntando una imagen o por URL.
