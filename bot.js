@@ -4,6 +4,10 @@ const fs = require("fs");
 /* Creando un nuevo cliente con el ID de cliente "client-takane" */
 const client = new Client({
   authStrategy: new LocalAuth({ clientId: "client-takane" }),
+  puppeteer: {
+    headless: true,
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+  },
 });
 
 /* Está cargando todos los eventos en la carpeta de eventos. */
