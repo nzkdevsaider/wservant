@@ -5,7 +5,6 @@ module.exports = {
   description: "Crea un sticker a partir del URL de una imagen.",
   aliases: ["ustkr"],
   usage: "<url> <?nombre>",
-  args: true,
 
   async execute(msg, args) {
     let name = args.join(" ");

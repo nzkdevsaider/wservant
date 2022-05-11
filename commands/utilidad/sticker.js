@@ -4,7 +4,6 @@ module.exports = {
   name: "sticker",
   description: "Crea un sticker a partir de una imagen adjuntada.",
   usage: "[imagen adjn.] <?nombre>",
-  args: true,
 
   async execute(msg, args) {
     if (msg.hasMedia) {
