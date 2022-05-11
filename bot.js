@@ -23,6 +23,22 @@ for (const file of eventFiles) {
   );
 }
 
+/* Está cargando todos los comandos en la carpeta de comandos. */
+
+client.commands = new Map();
+
+const commandFolders = fs.readdirSync("./commands");
+
+for (const folder of commandFolders) {
+  const commandFiles = fs
+    .readdirSync(`./commands/${folder}`)
+    .filter((file) => file.endsWith(".js"));
+  for (const file of commandFiles) {
+    const command = require(`./commands/${folder}/${file}`);
+    client.commands.set(command.name, command);
+  }
+}
+
 /* Es un detector de la señal SIGINT, que se envía cuando el usuario presiona Ctrl+C. */
 process.on("SIGINT", async () => {
   console.log("(SIGINT) Shutting down...");

@@ -8,6 +8,6 @@ module.exports = {
   name: "authenticated",
 
   execute() {
-    console.log("AUTHENTICATED");
+    console.log("La sesión ha sido autenticada.");
   },
 };

@@ -8,6 +8,6 @@ module.exports = {
   name: "ready",
 
   execute() {
-    console.log("Client is ready!");
+    console.log("El bot está en línea en WhatsApp.");
   },
 };

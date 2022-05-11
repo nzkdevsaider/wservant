@@ -4,20 +4,29 @@
  * @since 1.0.0
  */
 
-const { random } = require("../utility");
-const { version } = require("../package.json");
-const { MessageMedia } = require("whatsapp-web.js");
+const { prefix, owner } = require("../config.json");
 
 module.exports = {
   name: "message",
 
-  async execute(msg) {
+  async execute(msg, client) {
     console.log("MESSAGE RECEIVED", msg);
 
-    if (msg.body.startsWith("!ping")) {
-      let emojis = ["💅", "✊", "👍", "🖐", "🤙", "🤟"];
-      msg.reply(`${random(emojis)} *v${version}* `);
-    }
+    /**
+     * Comprueba si el mensaje comienza con el prefijo y, si lo hace, ejecuta el comando.
+     * @param string - La cadena a buscar.
+     * @returns El objeto de charla.
+     */
+    const escapeRegex = (string) => {
+      return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    };
+    const checkPrefix = prefix.toLowerCase();
+    const prefixRegex = new RegExp(`^(${escapeRegex(checkPrefix)})\\s*`);
+
+    if (!prefixRegex.test(msg.body.toLowerCase())) return;
+    const [matchedPrefix] = msg.body.toLowerCase().match(prefixRegex);
+    const args = msg.body.slice(matchedPrefix.length).trim().split(/ +/);
+    const commandName = args.shift().toLowerCase();
 
     if (msg.body.startsWith("yt ")) {
       let ytRegex =
@@ -39,99 +48,52 @@ module.exports = {
       }
     }
 
-    if (msg.body.startsWith("!ginfo")) {
-      let chat = await msg.getChat();
-      if (chat.isGroup) {
-        msg.reply(`
-                  *Información de ${chat.name}*
-                  Descripción: ${chat.description}
-                  Creado el: ${chat.createdAt.toString()}
-                  Creado por: ${chat.owner.user}
-                  Participantes: ${chat.participants.length}
-              `);
-      } else {
-        msg.reply("Este comando sólo funciona en grupos.");
-      }
+    if (!msg.body.startsWith(matchedPrefix)) return;
+
+    const command = client.commands.get(commandName);
+
+    if (!command) return;
+
+    let chat = msg.getChat();
+
+    /* Comprobando si el comando tiene una propiedad únicamente de propietario y si el mensaje es del
+    propietario. Si el comando tiene una propiedad solo propietario y el mensaje no es del
+    propietario, responderá con un mensaje que dice que el comando es solo propietario. */
+    if (command.ownerOnly && msg.from !== owner) {
+      return msg.reply(
+        "❎ Lo siento, pero este comando sólo es para dueños del bot."
+      );
     }
 
-    if (msg.body.startsWith("!sticker")) {
-      let spliter = msg.body.split(" "),
-        name = spliter[1];
+    /* Esto es verificar si el comando tiene una propiedad groupOnly y si el chat es un grupo. Si el
+    comando tiene una propiedad groupOnly y el chat no es un grupo, responderá con un mensaje que
+    dice que el comando solo funciona en grupos. */
 
-      if (msg.hasMedia) {
-        try {
-          let chat = await msg.getChat();
-          const sticker = await msg.downloadMedia();
-
-          chat.sendMessage(sticker, {
-            sendMediaAsSticker: true,
-            stickerName: name
-              ? name + " (nzkdevsaider/wservant)"
-              : "WServant Sticker (nzkdevsaider/wservant)",
-            stickerAuthor: "WServant",
-          });
-        } catch (e) {
-          msg.reply(
-            "Hubo un error al tratar de convertir esta imagen en sticker."
-          );
-        }
-      } else {
-        msg.reply(
-          "Debes adjuntar la imagen a la que quieres convertir en sticker."
-        );
-      }
+    if (command.groupOnly && !chat.isGroup) {
+      return msg.reply("❎ Este comando sólo funciona en grupos.");
     }
 
-    if (msg.body.startsWith("!urlsticker ")) {
-      let spliter = msg.body.split(" "),
-        url = spliter[1],
-        name = spliter[2];
+    /* Esto es verificar si el comando tiene argumentos y si el usuario no especificó ningún argumento.
+    Si el comando tiene argumentos y el usuario no especificó ningún argumento, responderá con un
+    mensaje que dice que el usuario no especificó ningún argumento. Si el comando tiene un uso,
+    también responderá con el uso del comando. */
 
-      if (!url) {
-        msg.reply(
-          "Te faltó poner el URL de la imagen a la que quieres convertir en sticker."
-        );
-      } else {
-        try {
-          let chat = await msg.getChat();
-          const sticker = await MessageMedia.fromUrl(url);
+    if (command.args && !args.length) {
+      let reply = `❎ No has especificado ningún argumento.`;
 
-          chat.sendMessage(sticker, {
-            sendMediaAsSticker: true,
-            stickerName: name
-              ? name + " (nzkdevsaider/wservant)"
-              : "WServant Sticker (nzkdevsaider/wservant)",
-            stickerAuthor: "WServant",
-          });
-        } catch (e) {
-          msg.reply(
-            "Hubo un error al tratar de convertir esta imagen en sticker."
-          );
-        }
+      if (command.usage) {
+        reply += `\nLa manera correcta de usar el comando es: *${prefix}${command.name} ${command.usage}*`;
       }
+
+      return msg.reply(reply);
     }
 
-    if (msg.body.startsWith("!spameadera")) {
-      let chat = await msg.getChat();
-      let spam = [
-        "🤸‍♀️🤸‍♀️🤑🙏🤩🤩😜😍🥰😋😜❤🙏😜💕😝😜🙏😍😋🤩🥰😜🙏🤸‍♀️🤸‍♀️😋🤑😜😝🙏🤸‍♀️😍🤑",
-        "😝😍😍🤑😝🥰🤩💕❤🤰😍🤸‍♀️🤩❤😝😋🤑🤩❤😜🤑😋🥰❤🙏😋😋😋🤑😍🤸‍♀️😋🙏😍🤩💕",
-        "❤😱🤰💅🥰🥰😍😋🤸‍♀️🤩😝😝🤰🤗🤙❤🙏💕👍😜😝💀🤰🤩😋😘👌🤰💕🤑❤🤰✋✊👍😜😝✋✋😜🤸‍♀️🤑💕😋🤰😜",
-      ];
-      let frasesbasicas = [
-        "Si soy",
-        "Conectadas",
-        "Entusiasmo",
-        "Amiga",
-        "Amigaaaa",
-        "omg fabulosa",
-        "Increíble",
-        "Tristeza",
-        "Si soy amiga",
-        "Fabulosa",
-      ];
-
-      chat.sendMessage(`${random(frasesbasicas)} ${random(spam)}`);
+    /* Está intentando ejecutar el comando, pero si falla, responderá con un mensaje de error. */
+    try {
+      command.execute(msg, args);
+    } catch (error) {
+      console.error(error);
+      msg.reply("❎ Ups. Ha ocurrido un error al ejecutar ese comando.");
     }
   },
 };

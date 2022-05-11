@@ -8,6 +8,6 @@ module.exports = {
   name: "auth_failure",
 
   execute(msg) {
-    console.error("AUTHENTICATION FAILURE", msg);
+    console.error("Hubo un error de autenticación de la sesión.", msg);
   },
 };
