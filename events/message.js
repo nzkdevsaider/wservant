@@ -11,23 +11,6 @@ module.exports = {
 
   async execute(msg, client) {
     console.log("MESSAGE RECEIVED", msg);
-
-    /**
-     * Comprueba si el mensaje comienza con el prefijo y, si lo hace, ejecuta el comando.
-     * @param string - La cadena a buscar.
-     * @returns El objeto de charla.
-     */
-    const escapeRegex = (string) => {
-      return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    };
-    const checkPrefix = prefix.toLowerCase();
-    const prefixRegex = new RegExp(`^(${escapeRegex(checkPrefix)})\\s*`);
-
-    if (!prefixRegex.test(msg.body.toLowerCase())) return;
-    const [matchedPrefix] = msg.body.toLowerCase().match(prefixRegex);
-    const args = msg.body.slice(matchedPrefix.length).trim().split(/ +/);
-    const commandName = args.shift().toLowerCase();
-
     if (msg.body.startsWith("yt ")) {
       let ytRegex =
         /(youtu\.be\/|youtube\.com\/(watch\?(.*&)?v=|(embed|v)\/))([^\?&"'>]+)/;
@@ -47,6 +30,22 @@ module.exports = {
         );
       }
     }
+
+    /**
+     * Comprueba si el mensaje comienza con el prefijo y, si lo hace, ejecuta el comando.
+     * @param string - La cadena a buscar.
+     * @returns El objeto de charla.
+     */
+    const escapeRegex = (string) => {
+      return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    };
+    const checkPrefix = prefix.toLowerCase();
+    const prefixRegex = new RegExp(`^(${escapeRegex(checkPrefix)})\\s*`);
+
+    if (!prefixRegex.test(msg.body.toLowerCase())) return;
+    const [matchedPrefix] = msg.body.toLowerCase().match(prefixRegex);
+    const args = msg.body.slice(matchedPrefix.length).trim().split(/ +/);
+    const commandName = args.shift().toLowerCase();
 
     if (!msg.body.startsWith(matchedPrefix)) return;
 
