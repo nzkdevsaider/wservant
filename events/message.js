@@ -89,7 +89,7 @@ module.exports = {
 
     /* Está intentando ejecutar el comando, pero si falla, responderá con un mensaje de error. */
     try {
-      command.execute(msg, args);
+      command.execute(msg, args, client);
     } catch (error) {
       console.error(error);
       msg.reply("❎ Ups. Ha ocurrido un error al ejecutar ese comando.");

@@ -10,6 +10,9 @@ const client = new Client({
   },
 });
 
+/* Extendiendo el cliente con funciones adicionales */
+client.botStart = new Date;
+
 /* Está cargando todos los eventos en la carpeta de eventos. */
 const eventFiles = fs
   .readdirSync("./events")

@@ -1,6 +1,6 @@
 {
   "name": "wservant",
-  "version": "1.1.5",
+  "version": "1.2.5",
   "dependencies": {
     "child_process": "^1.0.2",
     "qrcode-terminal": "^0.12.0",
