@@ -1,7 +1,7 @@
 module.exports = {
   name: "help",
 
-  execute(msg, args, client) {
+  async execute(msg, args, client) {
     const { botVersion } = client;
     const chat = await msg.getChat();
 
