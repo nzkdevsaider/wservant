@@ -1,5 +1,5 @@
 module.exports = {
-  name: "ginfo",
+  name: "groupinfo",
   description: "Mira la información de un grupo.",
   groupOnly: true,
 
