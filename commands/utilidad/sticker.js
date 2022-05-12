@@ -10,7 +10,7 @@ module.exports = {
     let chat = await msg.getChat();
 
     if (msg.hasQuotedMsg) {
-      const quoted = msg.getQuotedMessage();
+      const quoted = await msg.getQuotedMessage();
       if (quoted.hasMedia) {
         try {
           const sticker = await quoted.downloadMedia();
