@@ -1,6 +1,6 @@
 module.exports = {
   name: "ginfo",
-  description: "Mira la información del grupo.",
+  description: "Mira la información de un grupo.",
   groupOnly: true,
 
   async execute(msg) {

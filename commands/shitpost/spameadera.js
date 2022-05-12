@@ -2,6 +2,8 @@ const { random } = require("./../../utility");
 
 module.exports = {
     name: "spameadera",
+    hidden: true,
+
     async execute(msg) {
         let chat = await msg.getChat();
         let spam = [

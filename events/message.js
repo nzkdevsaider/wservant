@@ -81,7 +81,7 @@ module.exports = {
       let reply = `❎ No has especificado ningún argumento.`;
 
       if (command.usage) {
-        reply += `\nLa manera correcta de usar el comando es: *${prefix}${command.name} ${command.usage}*`;
+        reply += `\nLa manera correcta de usar el comando es:\n*${prefix}${command.name} ${command.usage}*`;
       }
 
       return msg.reply(reply);

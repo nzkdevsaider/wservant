@@ -3,6 +3,8 @@ const { version, dependencies } = require("./../../package.json");
 
 module.exports = {
   name: "ping",
+  description: "Latencia y estado del bot.",
+  
   execute(msg, args, client) {
     let emojis = ["💅", "✊", "👍", "🖐", "🤙", "🤟"];
     msg.reply(

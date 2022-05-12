@@ -3,7 +3,6 @@ const { MessageMedia } = require("whatsapp-web.js");
 module.exports = {
   name: "urlsticker",
   description: "Crea un sticker a partir del URL de una imagen.",
-  aliases: ["ustkr"],
   usage: "<url> <?nombre>",
 
   async execute(msg, args) {

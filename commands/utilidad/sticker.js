@@ -6,10 +6,28 @@ module.exports = {
   usage: "[imagen adjn.] <?nombre>",
 
   async execute(msg, args) {
-    if (msg.hasMedia) {
+    let name = args.join(" ");
+    let chat = await msg.getChat();
+
+    if (msg.hasQuotedMsg) {
+      const quoted = msg.getQuotedMessage();
+      if (quoted.hasMedia) {
+        try {
+          const sticker = quoted.downloadMedia();
+
+          chat.sendMessage(sticker, {
+            sendMediaAsSticker: true,
+            stickerName: name ? name : "WServant Sticker",
+            stickerAuthor: "WServant (nzkdevsaider/wservant)",
+          });
+        } catch (e) {
+          msg.reply(
+            "Hubo un error al tratar de convertir esta imagen en sticker."
+          );
+        }
+      }
+    } else if (msg.hasMedia) {
       try {
-        let name = args.join(" ");
-        let chat = await msg.getChat();
         const sticker = await msg.downloadMedia();
 
         chat.sendMessage(sticker, {

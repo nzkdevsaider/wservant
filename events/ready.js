@@ -7,7 +7,8 @@
 module.exports = {
   name: "ready",
 
-  execute() {
-    console.log("El bot está en línea en WhatsApp.");
+  execute(client) {
+    console.log(client.botAscii);
+    console.log(`v${client.botVersion}`)
   },
 };
