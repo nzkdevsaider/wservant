@@ -1,6 +1,6 @@
 const { Client, LocalAuth } = require("whatsapp-web.js");
 const config = require("./config.json");
-const { version, dependencies } = require("./package.json");
+const { version } = require("./package.json");
 const fs = require("fs");
 
 /* Creando un nuevo cliente con el ID de cliente "client-takane" */
@@ -14,7 +14,7 @@ const client = new Client({
 
 /* Extendiendo el cliente con funciones adicionales */
 client.botStart = new Date();
-client.botVersion = dependencies["whatsapp-web.js"];
+client.botVersion = version;
 client.botOwner = config.owner;
 client.botAscii =
   " _       _______                             __ \n| |     / / ___/___  ______   ______ _____  / /_\n| | /| / /\\__ \\/ _ \\/ ___/ | / / __ `/ __ \\/ __/\n| |/ |/ /___/ /  __/ /   | |/ / /_/ / / / / /_  \n|__/|__//____/\\___/_/    |___/\\__,_/_/ /_/\\__/  ";
