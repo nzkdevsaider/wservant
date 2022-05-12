@@ -13,7 +13,7 @@ module.exports = {
       const quoted = msg.getQuotedMessage();
       if (quoted.hasMedia) {
         try {
-          const sticker = quoted.downloadMedia();
+          const sticker = await quoted.downloadMedia();
 
           chat.sendMessage(sticker, {
             sendMediaAsSticker: true,
