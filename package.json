@@ -1,6 +1,6 @@
 {
   "name": "wservant",
-  "version": "1.2.5",
+  "version": "1.2.7",
   "dependencies": {
     "ascii-art": "^2.8.5",
     "child_process": "^1.0.2",
