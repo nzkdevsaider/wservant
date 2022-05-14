@@ -1,4 +1,4 @@
-# Whatsapp Servant Bot
+# WServant - asistente multipropósito y utilidad
 
 **BETA**
 
