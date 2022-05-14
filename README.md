@@ -4,7 +4,7 @@
 
 Bot de WhatsApp construido con [whatsapp-web.js](https://wwebjs.dev/guide/) para propositos generales y de utilidad.
 
-* [Lista de comandos](https://gist.github.com/nzkdevsaider/ba41879cdc0b7975f744948b95de2523)
+* [Documentación de ayuda del bot](https://gist.github.com/nzkdevsaider/ba41879cdc0b7975f744948b95de2523)
 
 # Funciones
 
