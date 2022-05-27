@@ -10,12 +10,14 @@ module.exports = {
   name: "message",
 
   async execute(msg, client) {
-    console.log("MESSAGE RECEIVED", msg);
+    /* Es un comando que genera un enlace de descarga para un video de YouTube. */
     if (msg.body.startsWith("yt ")) {
       let ytRegex =
         /(youtu\.be\/|youtube\.com\/(watch\?(.*&)?v=|(embed|v)\/))([^\?&"'>]+)/;
       let video = msg.body.split(" ")[1];
       let ytID = video.match(ytRegex);
+
+      client.log(`${msg.from} ha solicitado la descarga de un vídeo.`);
 
       // let messageIndex = msg.body.indexOf(video) + video.length;
       // let message = msg.body.slice(messageIndex, msg.body.length);
@@ -53,15 +55,33 @@ module.exports = {
 
     if (!command) return;
 
-    let chat = msg.getChat();
+    let chat = await msg.getChat();
+
+    client.log(
+      `${
+        chat.isGroup
+          ? `${msg.author} [D: ${client.isOwner(msg.author)}] [Grupo: Sí]`
+          : `${msg.from} [D: ${client.isOwner(msg.from)}]`
+      } ha usado el comando ${prefix}${command.name}`
+    );
 
     /* Comprobando si el comando tiene una propiedad únicamente de propietario y si el mensaje es del
     propietario. Si el comando tiene una propiedad solo propietario y el mensaje no es del
     propietario, responderá con un mensaje que dice que el comando es solo propietario. */
-    if (command.ownerOnly && msg.from !== owner) {
-      return msg.reply(
-        "❎ Lo siento, pero este comando sólo es para dueños del bot."
-      );
+    if (command.ownerOnly) {
+      if (chat.isGroup) {
+        if (!client.isOwner(msg.author)) {
+          return msg.reply(
+            "❎ Lo siento, pero este comando sólo es para dueños del bot."
+          );
+        }
+      } else {
+        if (!client.isOwner(msg.from)) {
+          return msg.reply(
+            "❎ Lo siento, pero este comando sólo es para dueños del bot."
+          );
+        }
+      }
     }
 
     /* Esto es verificar si el comando tiene una propiedad groupOnly y si el chat es un grupo. Si el
@@ -91,7 +111,7 @@ module.exports = {
     try {
       command.execute(msg, args, client);
     } catch (error) {
-      console.error(error);
+      client.log(error, "error");
       msg.reply("❎ Ups. Ha ocurrido un error al ejecutar ese comando.");
     }
   },

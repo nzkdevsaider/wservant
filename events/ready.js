@@ -9,6 +9,6 @@ module.exports = {
 
   execute(client) {
     console.log(client.botAscii);
-    console.log(`v${client.botVersion}`)
+    console.log(`v${client.CONSTANTS.info_bot.version}`)
   },
 };

@@ -8,7 +8,6 @@ module.exports = {
   ownerOnly: true,
 
   async execute(msg, args, client) {
-    let
     try {
       let evalued = await eval(args.join(" "));
       if (typeof evalued !== "string")

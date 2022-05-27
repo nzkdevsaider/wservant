@@ -2,3 +2,4 @@ node_modules/
 .wwebjs_auth/
 config.json
 package-lock.json
+test/
