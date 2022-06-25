@@ -6,9 +6,8 @@ module.exports = {
   usage: "<url> <?nombre>",
 
   async execute(msg, args, client) {
-    let sep = args.split(" "),
-      url = sep[0],
-      name = sep[1];
+    let url = args[0],
+      name = args[1];
 
     if (!url) {
       msg.reply(
