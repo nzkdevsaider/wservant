@@ -12,4 +12,7 @@ module.exports = {
     github: "https://github.com/nzkdevsaider/wservant",
     docs: "https://gist.github.com/nzkdevsaider/ba41879cdc0b7975f744948b95de2523",
   },
+  regex: {
+    ig_post: /(?:https?:\/\/www\.)?instagram\.com\S*?\/p\/(\w{11})?/g,
+  },
 };
